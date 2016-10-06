@@ -9,12 +9,12 @@ MyBatis3的代码自动生成工具，简单实用，java，for MySQL。
 * 数据库脚本文件以 .sql 结尾；
 * 所有数据库脚本文件请放在同一个文件夹下，不要放在子目录中；
 * 程序自动遍历所有脚本文件，根据建表脚本生成代码，建表脚本格式：
-```TSQL
-CREATE TABLE `TB_Users` (
-  `ID` int(11) NOT NULL COMMENT '用户ID',
-  `UserName` varchar(50) NOT NULL COMMENT '用户姓名',
-  `UserLevel` tinyint(4) NOT NULL COMMENT '用户级别',
-  `UserNotes` varchar(200) DEFAULT NULL COMMENT '用户注释',
+```SQL
+CREATE TABLE \`TB_Users\` (
+  \`ID\` int(11) NOT NULL COMMENT '用户ID',
+  \`UserName\` varchar(50) NOT NULL COMMENT '用户姓名',
+  \`UserLevel\` tinyint(4) NOT NULL COMMENT '用户级别',
+  \`UserNotes\` varchar(200) DEFAULT NULL COMMENT '用户注释',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 ```
