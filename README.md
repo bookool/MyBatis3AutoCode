@@ -54,3 +54,4 @@ java -jar MyBatis3AutoCode.jar config.xml
 ## 注意
 * 表脚本必须要有字段注释和表注释。
 * 程序会生成 autocode.log 日志文件。
+* 仅支持 UTF-8 。

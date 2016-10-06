@@ -2,11 +2,14 @@ package com.bookool.MyBatis3AutoCode;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -119,7 +122,8 @@ public class App
 				String tablestr = "";
 				try
 				{
-					FileReader fr = new FileReader(fs[i]);
+					// FileReader fr = new FileReader(fs[i]);
+					InputStreamReader fr = new InputStreamReader(new FileInputStream(fs[i]), "UTF-8");
 					BufferedReader br = new BufferedReader(fr);
 					try
 					{
@@ -146,7 +150,8 @@ public class App
 								rline = br.readLine();
 							}
 							tablestr = sbf.toString();
-							if (tablestr.matches("(?i)\\s*CREATE\\s*TABLE\\s*`[^`]+`\\s*\\(.*\\).*COMMENT\\s*=\\s*'[^']+'.*;.*$"))
+							if (tablestr.matches(
+									"(?i)\\s*CREATE\\s*TABLE\\s*`[^`]+`\\s*\\(.*\\).*COMMENT\\s*=\\s*'[^']+'.*;.*$"))
 							{
 								mytable zt = GetTable(tablestr, PackageName, TableNamePrefixion, TableScriptDir,
 										ModelDir, DaoDir, ServiceDir, ServiceImplDir);
@@ -174,6 +179,7 @@ public class App
 							}
 						}
 						br.close();
+						fr.close();
 					}
 					catch (IOException e)
 					{
@@ -188,7 +194,7 @@ public class App
 						AppLog.WriteLog("发生错误：" + e.getMessage(), true);
 					}
 				}
-				catch (FileNotFoundException e)
+				catch (FileNotFoundException | UnsupportedEncodingException e)
 				{
 					// TODO 自动生成的 catch 块
 					e.printStackTrace();

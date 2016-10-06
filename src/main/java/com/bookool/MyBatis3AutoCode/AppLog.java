@@ -1,7 +1,11 @@
 package com.bookool.MyBatis3AutoCode;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,16 +28,17 @@ public class AppLog
 		String LogFileName = System.getProperty("user.dir") + "/autocode.log";
 		try
 		{
-			FileWriter fw = new FileWriter(LogFileName, true);
+			//FileWriter fw = new FileWriter(LogFileName, true);
+			OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(LogFileName, true), "UTF-8");
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");// 设置日期格式
 			String wlog = "* " + df.format(new Date()) + "\r\n";
 			if (iserr)
 			{
-				wlog += "×" + logstr;
+				wlog += "× " + logstr;
 			}
 			else
 			{
-				wlog += "√" + logstr;
+				wlog += "√ " + logstr;
 			}
 			fw.write(wlog + "\r\n");
 			fw.close();

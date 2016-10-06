@@ -1,7 +1,9 @@
 package com.bookool.MyBatis3AutoCode;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -70,10 +72,12 @@ public class BuildCode
 			prostrb.append(";\r\n	}\r\n\r\n");
 		}
 		prostrb.append("}\r\n");
-		FileWriter fw;
 		try
 		{
-			fw = new FileWriter(zt.getModelDir() + "/" + zt.getTableName() + ".java", true);
+			// FileWriter fw = new FileWriter(zt.getModelDir() + "/" +
+			// zt.getTableName() + ".java", true);
+			OutputStreamWriter fw = new OutputStreamWriter(
+					new FileOutputStream(zt.getModelDir() + "/" + zt.getTableName() + ".java", true), "UTF-8");
 			fw.write(prostrb.toString());
 			fw.close();
 		}
@@ -151,10 +155,12 @@ public class BuildCode
 		prostrb.append(" 记录\r\n	 */\r\n	int baseupdateSelective(");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" record);\r\n\r\n}\r\n");
-		FileWriter fw;
 		try
 		{
-			fw = new FileWriter(zt.getDaoDir() + "/" + zt.getTableName() + "Mapper.java", true);
+			// FileWriter fw = new FileWriter(zt.getDaoDir() + "/" +
+			// zt.getTableName() + "Mapper.java", true);
+			OutputStreamWriter fw = new OutputStreamWriter(
+					new FileOutputStream(zt.getDaoDir() + "/" + zt.getTableName() + "Mapper.java", true), "UTF-8");
 			fw.write(prostrb.toString());
 			fw.close();
 		}
@@ -439,7 +445,7 @@ public class BuildCode
 		prostrb.append("		<set>\r\n");
 		for (myfield mf : zt.getFields())
 		{
-			//update中，作为条件的字段不更新
+			// update中，作为条件的字段不更新
 			if (mf == prif)
 			{
 				continue;
@@ -476,7 +482,7 @@ public class BuildCode
 		prostrb.append("		<set>\r\n");
 		for (myfield mf : zt.getFields())
 		{
-			//update中，作为条件的字段不更新
+			// update中，作为条件的字段不更新
 			if (mf == prif)
 			{
 				continue;
@@ -504,10 +510,12 @@ public class BuildCode
 		prostrb.append("}\r\n");
 		prostrb.append("	</update>\r\n\r\n");
 		prostrb.append("</mapper>");
-		FileWriter fw;
 		try
 		{
-			fw = new FileWriter(zt.getDaoDir() + "/" + zt.getTableName() + "Mapper.xml", true);
+			// FileWriter fw = new FileWriter(zt.getDaoDir() + "/" +
+			// zt.getTableName() + "Mapper.xml", true);
+			OutputStreamWriter fw = new OutputStreamWriter(
+					new FileOutputStream(zt.getDaoDir() + "/" + zt.getTableName() + "Mapper.xml", true), "UTF-8");
 			fw.write(prostrb.toString());
 			fw.close();
 		}
@@ -585,10 +593,12 @@ public class BuildCode
 		prostrb.append(" 记录\r\n	 */\r\n	public int baseupdateSelective(");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" record);\r\n\r\n}\r\n");
-		FileWriter fw;
 		try
 		{
-			fw = new FileWriter(zt.getServiceDir() + "/" + zt.getTableName() + "Service.java", true);
+			// FileWriter fw = new FileWriter(zt.getServiceDir() + "/" +
+			// zt.getTableName() + "Service.java", true);
+			OutputStreamWriter fw = new OutputStreamWriter(
+					new FileOutputStream(zt.getServiceDir() + "/" + zt.getTableName() + "Service.java", true), "UTF-8");
 			fw.write(prostrb.toString());
 			fw.close();
 		}
@@ -708,10 +718,13 @@ public class BuildCode
 		prostrb.append(" record)\r\n	{\r\n		return ");
 		prostrb.append(mappername);
 		prostrb.append(".baseupdateSelective(record);\r\n	}\r\n\r\n}\r\n");
-		FileWriter fw;
 		try
 		{
-			fw = new FileWriter(zt.getServiceImplDir() + "/" + zt.getTableName() + "ServiceImpl.java", true);
+			// FileWriter fw = new FileWriter(zt.getServiceImplDir() + "/" +
+			// zt.getTableName() + "ServiceImpl.java", true);
+			OutputStreamWriter fw = new OutputStreamWriter(
+					new FileOutputStream(zt.getServiceImplDir() + "/" + zt.getTableName() + "ServiceImpl.java", true),
+					"UTF-8");
 			fw.write(prostrb.toString());
 			fw.close();
 		}
