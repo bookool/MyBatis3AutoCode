@@ -55,3 +55,151 @@ java -jar MyBatis3AutoCode.jar config.xml
 * 表脚本必须要有字段注释和表注释。
 * 程序会生成 autocode.log 日志文件。
 * 仅支持 UTF-8 。
+
+
+### 生成的dao下的xml文件示例：
+
+```XML
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 用户表 -->
+<mapper namespace="cn.run2.TG.HelloWorld.dao.UsersMapper" >
+	<resultMap id="BaseResultMap" type="cn.run2.TG.HelloWorld.model.Users" >
+		<!-- 用户ID -->
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<!-- 用户姓名 -->
+		<result column="UserName" property="username" jdbcType="VARCHAR" />
+		<!-- 用户级别 -->
+		<result column="UserLevel" property="userlevel" jdbcType="TINYINT" />
+		<!-- 用户注释 -->
+		<result column="UserNotes" property="usernotes" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		ID, UserName, UserLevel, UserNotes
+	</sql>
+
+	<!-- 分页 -->
+	<sql id="Page">
+		<if test="Offset!=null and Rows!=null">
+			LIMIT #{Offset,jdbcType=INTEGER}, #{Rows,jdbcType=INTEGER}
+		</if>
+	</sql>
+
+	<!-- 基础模板 取得 Users 分页列表 -->
+	<select id="baseselectListPage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM TB_Users
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id!=null">
+				AND ID = #{id, jdbcType=INTEGER}
+			</if>
+			<if test="username!=null and username!=''">
+				AND UserName LIKE CONCAT('%', #{username, jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="userlevel!=null">
+				AND UserLevel = #{userlevel, jdbcType=TINYINT}
+			</if>
+			<if test="usernotes!=null and usernotes!=''">
+				AND UserNotes LIKE CONCAT('%', #{usernotes, jdbcType=VARCHAR}, '%')
+			</if>
+		</trim>
+		<include refid="Page"></include>
+	</select>
+
+	<!-- 基础模板 取得一个 Users 对象 -->
+	<select id="baseselectTopOneByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM TB_Users
+		WHERE ID = #{id,jdbcType=INTEGER}
+		LIMIT 0,1
+	</select>
+
+	<!-- 基础模板 删除 Users 中的数据 -->
+	<delete id="basesdeleteByPrimaryKey" parameterType="java.lang.Integer" >
+		DELETE FROM TB_Users
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 基础模板 添加一条完整的 Users 记录 -->
+	<insert id="baseinsert" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+		INSERT INTO TB_Users (
+			ID, UserName, UserLevel, UserNotes)
+		VALUES (
+			#{id, jdbcType=INTEGER}, #{username, jdbcType=VARCHAR}, 
+			#{userlevel, jdbcType=TINYINT}, #{usernotes, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 基础模板 添加一条 Users 记录 -->
+	<insert id="baseinsertSelective" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+		INSERT INTO TB_Users
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id!=null" >
+				id,
+			</if>
+			<if test="username!=null" >
+				username,
+			</if>
+			<if test="userlevel!=null" >
+				userlevel,
+			</if>
+			<if test="usernotes!=null" >
+				usernotes,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="id!=null" >
+				#{id, jdbcType=INTEGER},
+			</if>
+			<if test="username!=null" >
+				#{username, jdbcType=VARCHAR},
+			</if>
+			<if test="userlevel!=null" >
+				#{userlevel, jdbcType=TINYINT},
+			</if>
+			<if test="usernotes!=null" >
+				#{usernotes, jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 基础模板 更新完整的 Users 记录 -->
+	<update id="baseupdate" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+		UPDATE TB_Users
+		<set>
+			UserName = #{username,jdbcType=VARCHAR},
+			UserLevel = #{userlevel,jdbcType=TINYINT},
+			UserNotes = #{usernotes,jdbcType=VARCHAR},
+		</set>
+		WHERE
+			ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 基础模板 更新 Users 记录 -->
+	<update id="baseupdateSelective" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+		UPDATE TB_Users
+		<set>
+			<if test="username!=null" >
+				UserName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="userlevel!=null" >
+				UserLevel = #{userlevel,jdbcType=TINYINT},
+			</if>
+			<if test="usernotes!=null" >
+				UserNotes = #{usernotes,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE
+			ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>
+```
+
+### 更新：
+## 17-2-2
+1、表前缀现在可以为空了；
+2、修改了获取字段的正则表达式的bug。
