@@ -71,10 +71,14 @@ public class App {
 	 * @return 是否全部成功
 	 */
 	private static boolean StartPro(String[] args) {
+		String CusTableName = null; // 只生成针对一个表生成代码，为空表示生成所有代码
 		AppLog.WriteLog("检查参数1：XML配置文件");
-		if (args.length != 1) {
-			AppLog.WriteLog("参数1错误！", true);
+		if (args.length < 1 || args.length > 2) {
+			AppLog.WriteLog("参数错误！", true);
 			return false;
+		}
+		if (args.length == 2) {
+			CusTableName = args[1];
 		}
 		AppLog.WriteLog("解析文件：" + args[0]);
 		String PackageName;
@@ -89,7 +93,7 @@ public class App {
 			Document doc = saxReader.read(new File(args[0]));
 			Element zroot = doc.getRootElement();
 			PackageName = VNode(zroot, "PackageName");
-			TableNamePrefixion = VNode(zroot, "TableNamePrefixion", false); //TableNamePrefixion可以为空
+			TableNamePrefixion = VNode(zroot, "TableNamePrefixion", false); // TableNamePrefixion可以为空
 			TableScriptDir = VNode(zroot, "TableScriptDir");
 			ModelDir = VNode(zroot, "ModelDir");
 			DaoDir = VNode(zroot, "DaoDir");
@@ -106,8 +110,7 @@ public class App {
 				String tablestr = "";
 				try {
 					// FileReader fr = new FileReader(fs[i]);
-					InputStreamReader fr = new InputStreamReader(
-							new FileInputStream(fs[i]), "UTF-8");
+					InputStreamReader fr = new InputStreamReader(new FileInputStream(fs[i]), "UTF-8");
 					BufferedReader br = new BufferedReader(fr);
 					try {
 						String rline = br.readLine();
@@ -115,15 +118,13 @@ public class App {
 							boolean canread = false;
 							StringBuilder sbf = new StringBuilder();
 							while (rline != null) {
-								if (rline.matches(
-										"(?i)\\s*CREATE\\s*TABLE\\s*`[^`]+`\\s*\\(.*")) {
+								if (rline.matches("(?i)\\s*CREATE\\s*TABLE\\s*`[^`]+`\\s*\\(.*")) {
 									canread = true;
 								}
 								if (canread) {
 									sbf.append(rline);
 								}
-								if (rline.matches(
-										".*?\\).*?(?i)COMMENT\\s*=\\s*'[^']+'.*?;.*?$")) {
+								if (rline.matches(".*?\\).*?(?i)COMMENT\\s*=\\s*'[^']+'.*?;.*?$")) {
 									rline = br.readLine();
 									break;
 								}
@@ -132,38 +133,23 @@ public class App {
 							tablestr = sbf.toString();
 							if (tablestr.matches(
 									"(?i)\\s*CREATE\\s*TABLE\\s*`[^`]+`\\s*\\(.*\\).*COMMENT\\s*=\\s*'[^']+'.*;.*$")) {
-								mytable zt = GetTable(tablestr, PackageName,
-										TableNamePrefixion, TableScriptDir,
-										ModelDir, DaoDir, ServiceDir,
-										ServiceImplDir);
+								mytable zt = GetTable(tablestr, CusTableName, PackageName, TableNamePrefixion,
+										TableScriptDir, ModelDir, DaoDir, ServiceDir, ServiceImplDir);
 								if (zt != null) {
-									if (zt.getFields().isEmpty()
-											&& zt.getPriFields().isEmpty()) {
-										AppLog.WriteLog(
-												"发生错误：[" + zt.getTableName()
-														+ "] 表中没有字段！",
-												true);
+									if (zt.getFields().isEmpty() && zt.getPriFields().isEmpty()) {
+										AppLog.WriteLog("发生错误：[" + zt.getTableName() + "] 表中没有字段！", true);
 									} else {
 										BuildCode.BuildModel(zt);
-										AppLog.WriteLog("成功生成了 model/"
-												+ zt.getTableName()
-												+ ".java 文件。");
+										AppLog.WriteLog("成功生成了 model/" + zt.getTableName() + ".java 文件。");
 										BuildCode.BuildDao(zt);
-										AppLog.WriteLog(
-												"成功生成了 dao/" + zt.getTableName()
-														+ "Mapper.java 文件。");
+										AppLog.WriteLog("成功生成了 dao/" + zt.getTableName() + "Mapper.java 文件。");
 										BuildCode.BuildDaoXML(zt);
-										AppLog.WriteLog(
-												"成功生成了 dao/" + zt.getTableName()
-														+ "Mapper.xml 文件。");
+										AppLog.WriteLog("成功生成了 dao/" + zt.getTableName() + "Mapper.xml 文件。");
 										BuildCode.BuildService(zt);
-										AppLog.WriteLog("成功生成了 service/"
-												+ zt.getTableName()
-												+ "Service.java 文件。");
+										AppLog.WriteLog("成功生成了 service/" + zt.getTableName() + "Service.java 文件。");
 										BuildCode.BuildServiceImpl(zt);
-										AppLog.WriteLog("成功生成了 service/impl/"
-												+ zt.getTableName()
-												+ "ServiceImpl.java 文件。");
+										AppLog.WriteLog(
+												"成功生成了 service/impl/" + zt.getTableName() + "ServiceImpl.java 文件。");
 									}
 								}
 							}
@@ -179,8 +165,7 @@ public class App {
 						e.printStackTrace();
 						AppLog.WriteLog("发生错误：" + e.getMessage(), true);
 					}
-				} catch (FileNotFoundException
-						| UnsupportedEncodingException e) {
+				} catch (FileNotFoundException | UnsupportedEncodingException e) {
 					// TODO 自动生成的 catch 块
 					e.printStackTrace();
 					AppLog.WriteLog("发生错误：" + e.getMessage(), true);
@@ -195,17 +180,22 @@ public class App {
 	/**
 	 * 将脚本字符串转为table对象
 	 */
-	private static mytable GetTable(String TabStr, String PackageName,
-			String TableNamePrefixion, String TableScriptDir, String ModelDir,
-			String DaoDir, String ServiceDir, String ServiceImplDir)
+	private static mytable GetTable(String TabStr, String CusTableName, String PackageName, String TableNamePrefixion,
+			String TableScriptDir, String ModelDir, String DaoDir, String ServiceDir, String ServiceImplDir)
 			throws Exception {
-		Matcher zm = Pattern.compile(
-				"\\s*CREATE\\s*TABLE\\s*`" + TableNamePrefixion
-						+ "([^`]+)`\\s*\\((.*)\\).*COMMENT\\s*=\\s*'([^']+)'.*;.*",
-				Pattern.CASE_INSENSITIVE).matcher(TabStr);
+		Matcher zm = Pattern
+				.compile("\\s*CREATE\\s*TABLE\\s*`" + TableNamePrefixion
+						+ "([^`]+)`\\s*\\((.*)\\).*COMMENT\\s*=\\s*'([^']+)'.*;.*", Pattern.CASE_INSENSITIVE)
+				.matcher(TabStr);
 		if (zm.find()) {
 			String TableName = zm.group(1).trim();
 			String TableComment = zm.group(3).trim();
+			if (CusTableName != null) {
+				if (!CusTableName.equals(TableName)) {
+					AppLog.WriteLog("找到数据表：" + TableName + " ，并非指定，不生成。");
+					return null;
+				}
+			}
 			AppLog.WriteLog("找到数据表：" + TableName);
 			boolean fe = false;
 			File tfile = new File(ModelDir + "/" + TableName + ".java");
@@ -228,8 +218,7 @@ public class App {
 				AppLog.WriteLog(tfile.getAbsolutePath() + " 已经存在。", true);
 				fe = true;
 			}
-			tfile = new File(
-					ServiceImplDir + "/" + TableName + "ServiceImpl.java");
+			tfile = new File(ServiceImplDir + "/" + TableName + "ServiceImpl.java");
 			if (tfile.exists()) {
 				AppLog.WriteLog(tfile.getAbsolutePath() + " 已经存在。", true);
 				fe = true;
@@ -240,11 +229,9 @@ public class App {
 			} else {
 				String TableCon = zm.group(2).trim();
 				List<String> prilist = new ArrayList<String>();
-				zm = Pattern.compile(".*PRIMARY\\s+KEY\\s*\\(([^\\(\\)]+)\\).*")
-						.matcher(TableCon);
+				zm = Pattern.compile(".*PRIMARY\\s+KEY\\s*\\(([^\\(\\)]+)\\).*").matcher(TableCon);
 				if (zm.find()) {
-					zm = Pattern.compile("\\s*`\\s*([^`]+?)\\s*`\\s*")
-							.matcher(zm.group(1));
+					zm = Pattern.compile("\\s*`\\s*([^`]+?)\\s*`\\s*").matcher(zm.group(1));
 					while (zm.find()) {
 						prilist.add(zm.group(1).trim());
 					}
@@ -302,16 +289,14 @@ public class App {
 	/**
 	 * 检查配置节点是否为空，配置节点为目录的检查目录是否存在
 	 */
-	private static String VNode(Element zroot, String NodeName)
-			throws Exception {
+	private static String VNode(Element zroot, String NodeName) throws Exception {
 		return VNode(zroot, NodeName, true);
 	}
 
 	/**
 	 * 检查配置节点是否为空，配置节点为目录的检查目录是否存在
 	 */
-	private static String VNode(Element zroot, String NodeName,
-			Boolean NotBlank) throws Exception {
+	private static String VNode(Element zroot, String NodeName, Boolean NotBlank) throws Exception {
 		Element nownode = zroot.element(NodeName);
 		String StPr = nownode.getText().trim();
 		if (NotBlank && StringUtils.isBlank(StPr)) {
