@@ -45,11 +45,20 @@ CREATE TABLE `TB_Users` (
 
 ### 2、执行
 1.生成jar包；
-2.使用命令行执行下列命令：
+
+2.使用方法：行执行下列命令：
 ```
 java -jar MyBatis3AutoCode.jar config.xml
 ```
 其中：MyBatis3AutoCode.jar 为生成的 jar 包， config.xml 为配置文件路径。
+
+3.使用方法2：行执行下列命令，生成某一张表的代码：
+
+```
+java -jar MyBatis3AutoCode.jar config.xml TableName
+```
+
+其中：TableName为表名（不加前缀）。
 
 ## 注意
 * 表脚本必须要有字段注释和表注释。
@@ -200,6 +209,15 @@ java -jar MyBatis3AutoCode.jar config.xml
 ```
 
 ### 更新：
+
 ## 17-2-2
 1、表前缀现在可以为空了；
 2、修改了获取字段的正则表达式的bug。
+
+### 17-2-15
+1、可指定生成某一张表的代码。
+```
+java -jar MyBatis3AutoCode.jar config.xml TableName
+```
+
+其中：TableName为表名(不加前缀)。
