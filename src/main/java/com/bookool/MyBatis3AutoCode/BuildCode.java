@@ -261,7 +261,9 @@ public class BuildCode
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 分页列表 -->\r\n");
 		prostrb.append("	<select id=\"baseselectListPage\" resultMap=\"BaseResultMap\" parameterType=\"");
-		prostrb.append(prif.getFModleTypeFull());
+		prostrb.append(zt.getPackageName());
+		prostrb.append(".model.");
+		prostrb.append(zt.getTableName());
 		prostrb.append("\" >\r\n");
 		prostrb.append("		SELECT\r\n");
 		prostrb.append("		<include refid=\"Base_Column_List\" />\r\n");

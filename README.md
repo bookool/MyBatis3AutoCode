@@ -221,3 +221,6 @@ java -jar MyBatis3AutoCode.jar config.xml TableName
 ```
 
 其中：TableName为表名(不加前缀)。
+
+### 17-2-23
+1、修改了bug。

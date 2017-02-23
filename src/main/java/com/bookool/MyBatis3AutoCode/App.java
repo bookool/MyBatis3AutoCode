@@ -251,7 +251,7 @@ public class App {
 				zt.setCommFields(new ArrayList<myfield>());
 				zm = Pattern
 						.compile(
-								"\\s*`([^`]+)`\\s*([a-zA-Z]+?)(\\s+|\\([\\d\\s,]+\\))[^`]+?COMMENT\\s*'([^`]+)'\\s*(?:,|\\))")
+								"\\s*`([^`]+)`\\s*([a-zA-Z]+?)(\\s+|\\([\\d\\s,]+\\))[^`]+?COMMENT\\s*'([^`]+)'\\s*(?:,|\\)|$)")
 						.matcher(TableCon);
 				while (zm.find()) {
 					TableCon = zm.group(0).trim();
