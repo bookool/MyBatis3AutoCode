@@ -97,7 +97,7 @@ java -jar MyBatis3AutoCode.jar config.xml TableName
 	</sql>
 
 	<!-- 基础模板 取得 Users 分页列表 -->
-	<select id="baseselectListPage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	<select id="baseselectListPage" resultMap="BaseResultMap" parameterType="cn.run2.TG.HelloWorld.model.Users" >
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM TB_Users
