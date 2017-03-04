@@ -326,7 +326,7 @@ public class BuildCode
 		prostrb.append("	<!-- 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 中的数据 -->\r\n");
-		prostrb.append("	<delete id=\"basesdeleteByPrimaryKey\" parameterType=\"");
+		prostrb.append("	<delete id=\"basedeleteByPrimaryKey\" parameterType=\"");
 		prostrb.append(prif.getFModleTypeFull());
 		prostrb.append("\" >\r\n");
 		prostrb.append("		DELETE FROM ");
@@ -570,7 +570,7 @@ public class BuildCode
 		prostrb.append(prif.getFieldModelName());
 		prostrb.append(");\r\n\r\n	/**\r\n	 * 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
-		prostrb.append(" 中的数据\r\n	 */\r\n	public int basesdeleteByPrimaryKey(");
+		prostrb.append(" 中的数据\r\n	 */\r\n	public int basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
 		prostrb.append(prif.getFieldModelName());
@@ -683,13 +683,13 @@ public class BuildCode
 		prostrb.append(prif.getFieldModelName());
 		prostrb.append(");\r\n	}\r\n\r\n	/**\r\n	 * 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
-		prostrb.append(" 中的数据\r\n	 */\r\n	@Override\r\n	public int basesdeleteByPrimaryKey(");
+		prostrb.append(" 中的数据\r\n	 */\r\n	@Override\r\n	public int basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
 		prostrb.append(prif.getFieldModelName());
 		prostrb.append(")\r\n	{\r\n		return ");
 		prostrb.append(mappername);
-		prostrb.append(".basesdeleteByPrimaryKey(");
+		prostrb.append(".basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFieldModelName());
 		prostrb.append(");\r\n	}\r\n\r\n	/**\r\n	 * 基础模板 添加一条完整的 ");
 		prostrb.append(zt.getTableName());
