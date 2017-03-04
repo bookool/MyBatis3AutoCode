@@ -134,7 +134,7 @@ public class BuildCode
 		prostrb.append(prif.getFieldModelName());
 		prostrb.append(");\r\n\r\n	/**\r\n	 * 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
-		prostrb.append(" 中的数据\r\n	 */\r\n	int basesdeleteByPrimaryKey(");
+		prostrb.append(" 中的数据\r\n	 */\r\n	int basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
 		prostrb.append(prif.getFieldModelName());
