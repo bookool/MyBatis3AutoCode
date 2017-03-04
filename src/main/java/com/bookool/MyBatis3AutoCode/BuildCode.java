@@ -260,9 +260,7 @@ public class BuildCode
 		prostrb.append("	<!-- 基础模板 取得 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 分页列表 -->\r\n");
-		prostrb.append("	<select id=\"baseselectListPage\" resultMap=\"BaseResultMap\" parameterType=\"");
-		prostrb.append(prif.getFModleTypeFull());
-		prostrb.append("\" >\r\n");
+		prostrb.append("	<select id=\"baseselectListPage\" resultMap=\"BaseResultMap\" parameterType=\"java.util.Map\" >\r\n");
 		prostrb.append("		SELECT\r\n");
 		prostrb.append("		<include refid=\"Base_Column_List\" />\r\n");
 		prostrb.append("		FROM ");
