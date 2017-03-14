@@ -200,10 +200,21 @@ java -jar MyBatis3AutoCode.jar config.xml
 ```
 
 ### 更新：
-## 17-2-2
+
+### 17-2-2
 1、表前缀现在可以为空了；
 2、修改了获取字段的正则表达式的bug。
 
-### 更新：
-## 17-3-4
+### 17-2-15
+1、可指定生成某一张表的代码。
+```
+java -jar MyBatis3AutoCode.jar config.xml TableName
+```
+
+其中：TableName为表名(不加前缀)。
+
+### 17-2-23
+1、修改了bug。
+
+### 17-3-4
 1、修改了错误的单词。
