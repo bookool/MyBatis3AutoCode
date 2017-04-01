@@ -218,3 +218,6 @@ java -jar MyBatis3AutoCode.jar config.xml TableName
 
 ### 17-3-4
 1、修改了错误的单词。
+
+### 17-4-1
+1、修改了时间类型的错误。
