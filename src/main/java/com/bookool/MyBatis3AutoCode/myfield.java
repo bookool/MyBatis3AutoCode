@@ -249,7 +249,7 @@ public class myfield
 				this.FModleTypeFull = "java.util.Date";
 				break;
 			case "datetime":
-				this.FJDBCType = "DATE";
+				this.FJDBCType = "TIMESTAMP";
 				this.FModleType = "Date";
 				this.FModleTypeFull = "java.util.Date";
 				break;
