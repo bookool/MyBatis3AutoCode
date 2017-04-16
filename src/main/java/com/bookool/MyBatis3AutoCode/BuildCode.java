@@ -24,7 +24,7 @@ public class BuildCode
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		prostrb = new StringBuilder("package ");
 		prostrb.append(zt.getPackageName());
-		prostrb.append(".model;\r\n\r\nimport java.util.Date;\r\n\r\n/**\r\n * ");
+		prostrb.append(".model;\r\n\r\nimport java.util.Date;\r\nimport java.math.BigDecimal;\r\n\r\n/**\r\n * ");
 		prostrb.append(zt.getTableComment());
 		prostrb.append("\r\n * @自动生成 ");
 		prostrb.append(df.format(new Date()));

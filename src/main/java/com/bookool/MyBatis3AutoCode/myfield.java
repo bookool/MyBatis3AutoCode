@@ -210,13 +210,13 @@ public class myfield
 				break;
 			case "decimal":
 				this.FJDBCType = "DECIMAL";
-				this.FModleType = "Long";
-				this.FModleTypeFull = "java.lang.Long";
+				this.FModleType = "BigDecimal";
+				this.FModleTypeFull = "	java.math.BigDecimal";
 				break;
 			case "numeric":
 				this.FJDBCType = "DECIMAL";
-				this.FModleType = "Long";
-				this.FModleTypeFull = "java.lang.Long";
+				this.FModleType = "BigDecimal";
+				this.FModleTypeFull = "	java.math.BigDecimal";
 				break;
 			case "char":
 				this.FJDBCType = "CHAR";
