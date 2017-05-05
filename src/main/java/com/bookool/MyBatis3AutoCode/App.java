@@ -251,14 +251,14 @@ public class App {
 				zt.setCommFields(new ArrayList<myfield>());
 				zm = Pattern
 						.compile(
-								"\\s*`([^`]+)`\\s*([a-zA-Z]+?)(\\s+|\\([\\d\\s,]+\\))[^`]+?COMMENT\\s*'([^`]+)'\\s*(?:,|\\)|$)")
+								"\\s*`([^`]+)`\\s*([a-zA-Z]+?)(\\s+|\\s*\\([\\d\\s,]+\\))([^`]*?)COMMENT\\s*'([^`]+)'\\s*(?:,|\\)|$)")
 						.matcher(TableCon);
 				while (zm.find()) {
 					TableCon = zm.group(0).trim();
 					myfield zf = new myfield();
 					zf.setFieldName(zm.group(1).trim());
 					zf.setFDBType(zm.group(2).trim().toLowerCase());
-					zf.setFieldComment(zm.group(4).trim());
+					zf.setFieldComment(zm.group(5).trim());
 					if (zm.group(4).matches(".*NOT\\s*NULL.*")) {
 						zf.setFieldNotNull(true);
 					} else {

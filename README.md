@@ -224,3 +224,6 @@ java -jar MyBatis3AutoCode.jar config.xml TableName
 
 ### 17-4-12
 1、修改了Bug。
+
+### 17-5-5
+1、修改了检测空的Bug。
