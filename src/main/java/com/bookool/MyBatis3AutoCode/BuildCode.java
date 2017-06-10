@@ -38,7 +38,7 @@ public class BuildCode
 			prostrb.append("\r\n	 */\r\n	private ");
 			prostrb.append(mf.getFModleType());
 			prostrb.append(" ");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(";\r\n\r\n");
 		}
 		for (myfield mf : zt.getFields())
@@ -48,25 +48,25 @@ public class BuildCode
 			prostrb.append("\r\n	 */\r\n	public ");
 			prostrb.append(mf.getFModleType());
 			prostrb.append(" get");
-			prostrb.append(mf.getFieldGetSetName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("()\r\n	{\r\n		return ");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(";\r\n	}\r\n\r\n	/**\r\n	 * 设置 ");
 			prostrb.append(mf.getFieldComment());
 			prostrb.append("\r\n	 */\r\n	public void set");
-			prostrb.append(mf.getFieldGetSetName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("(");
 			prostrb.append(mf.getFModleType());
 			prostrb.append(" ");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(")\r\n	{\r\n		this.");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(" = ");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			if (mf.getFModleType().equals("String"))
 			{
 				prostrb.append(" == null ? null : ");
-				prostrb.append(mf.getFieldModelName());
+				prostrb.append(mf.getFieldName());
 				prostrb.append(".trim()");
 			}
 			prostrb.append(";\r\n	}\r\n\r\n");
@@ -131,13 +131,13 @@ public class BuildCode
 		prostrb.append(" baseselectTopOneByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(");\r\n\r\n	/**\r\n	 * 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 中的数据\r\n	 */\r\n	int basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(");\r\n\r\n	/**\r\n	 * 基础模板 添加一条完整的 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 记录\r\n	 */\r\n	int baseinsert(");
@@ -214,7 +214,7 @@ public class BuildCode
 			prostrb.append("		<id column=\"");
 			prostrb.append(mf.getFieldName());
 			prostrb.append("\" property=\"");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("\" jdbcType=\"");
 			prostrb.append(mf.getFJDBCType());
 			prostrb.append("\" />\r\n");
@@ -227,7 +227,7 @@ public class BuildCode
 			prostrb.append("		<result column=\"");
 			prostrb.append(mf.getFieldName());
 			prostrb.append("\" property=\"");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("\" jdbcType=\"");
 			prostrb.append(mf.getFJDBCType());
 			prostrb.append("\" />\r\n");
@@ -272,14 +272,14 @@ public class BuildCode
 			if (mf.getFModleType().equals("String"))
 			{
 				prostrb.append("			<if test=\"");
-				prostrb.append(mf.getFieldModelName());
+				prostrb.append(mf.getFieldName());
 				prostrb.append("!=null and ");
-				prostrb.append(mf.getFieldModelName());
+				prostrb.append(mf.getFieldName());
 				prostrb.append("!=''\">\r\n");
 				prostrb.append("				AND ");
 				prostrb.append(mf.getFieldName());
 				prostrb.append(" LIKE CONCAT('%', #{");
-				prostrb.append(mf.getFieldModelName());
+				prostrb.append(mf.getFieldName());
 				prostrb.append(", jdbcType=");
 				prostrb.append(mf.getFJDBCType());
 				prostrb.append("}, '%')\r\n");
@@ -288,12 +288,12 @@ public class BuildCode
 			else
 			{
 				prostrb.append("			<if test=\"");
-				prostrb.append(mf.getFieldModelName());
+				prostrb.append(mf.getFieldName());
 				prostrb.append("!=null\">\r\n");
 				prostrb.append("				AND ");
 				prostrb.append(mf.getFieldName());
 				prostrb.append(" = #{");
-				prostrb.append(mf.getFieldModelName());
+				prostrb.append(mf.getFieldName());
 				prostrb.append(", jdbcType=");
 				prostrb.append(mf.getFJDBCType());
 				prostrb.append("}\r\n");
@@ -317,7 +317,7 @@ public class BuildCode
 		prostrb.append("		WHERE ");
 		prostrb.append(prif.getFieldName());
 		prostrb.append(" = #{");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(",jdbcType=");
 		prostrb.append(prif.getFJDBCType());
 		prostrb.append("}\r\n");
@@ -335,7 +335,7 @@ public class BuildCode
 		prostrb.append("		WHERE ");
 		prostrb.append(prif.getFieldName());
 		prostrb.append(" = #{");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(",jdbcType=");
 		prostrb.append(prif.getFJDBCType());
 		prostrb.append("}\r\n");
@@ -373,7 +373,7 @@ public class BuildCode
 		for (int i = 0; i < zt.getFields().size(); i++)
 		{
 			prostrb.append("#{");
-			prostrb.append(zt.getFields().get(i).getFieldModelName());
+			prostrb.append(zt.getFields().get(i).getFieldName());
 			prostrb.append(", jdbcType=");
 			prostrb.append(zt.getFields().get(i).getFJDBCType());
 			prostrb.append("}");
@@ -406,10 +406,10 @@ public class BuildCode
 		for (myfield mf : zt.getFields())
 		{
 			prostrb.append("			<if test=\"");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("!=null\" >\r\n");
 			prostrb.append("				");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(",\r\n");
 			prostrb.append("			</if>\r\n");
 		}
@@ -418,10 +418,10 @@ public class BuildCode
 		for (myfield mf : zt.getFields())
 		{
 			prostrb.append("			<if test=\"");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("!=null\" >\r\n");
 			prostrb.append("				#{");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(", jdbcType=");
 			prostrb.append(mf.getFJDBCType());
 			prostrb.append("},\r\n");
@@ -451,7 +451,7 @@ public class BuildCode
 			prostrb.append("			");
 			prostrb.append(mf.getFieldName());
 			prostrb.append(" = #{");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(",jdbcType=");
 			prostrb.append(mf.getFJDBCType());
 			prostrb.append("},\r\n");
@@ -461,7 +461,7 @@ public class BuildCode
 		prostrb.append("			");
 		prostrb.append(prif.getFieldName());
 		prostrb.append(" = #{");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(",jdbcType=");
 		prostrb.append(prif.getFJDBCType());
 		prostrb.append("}\r\n");
@@ -486,12 +486,12 @@ public class BuildCode
 				continue;
 			}
 			prostrb.append("			<if test=\"");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append("!=null\" >\r\n");
 			prostrb.append("				");
 			prostrb.append(mf.getFieldName());
 			prostrb.append(" = #{");
-			prostrb.append(mf.getFieldModelName());
+			prostrb.append(mf.getFieldName());
 			prostrb.append(",jdbcType=");
 			prostrb.append(mf.getFJDBCType());
 			prostrb.append("},\r\n");
@@ -502,7 +502,7 @@ public class BuildCode
 		prostrb.append("			");
 		prostrb.append(prif.getFieldName());
 		prostrb.append(" = #{");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(",jdbcType=");
 		prostrb.append(prif.getFJDBCType());
 		prostrb.append("}\r\n");
@@ -567,13 +567,13 @@ public class BuildCode
 		prostrb.append(" baseselectTopOneByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(");\r\n\r\n	/**\r\n	 * 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 中的数据\r\n	 */\r\n	public int basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(");\r\n\r\n	/**\r\n	 * 基础模板 添加一条完整的 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 记录\r\n	 */\r\n	public int baseinsert(");
@@ -676,21 +676,21 @@ public class BuildCode
 		prostrb.append(" baseselectTopOneByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(")\r\n	{\r\n		return ");
 		prostrb.append(mappername);
 		prostrb.append(".baseselectTopOneByPrimaryKey(");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(");\r\n	}\r\n\r\n	/**\r\n	 * 基础模板 删除 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 中的数据\r\n	 */\r\n	@Override\r\n	public int basedeleteByPrimaryKey(");
 		prostrb.append(prif.getFModleType());
 		prostrb.append(" ");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(")\r\n	{\r\n		return ");
 		prostrb.append(mappername);
 		prostrb.append(".basedeleteByPrimaryKey(");
-		prostrb.append(prif.getFieldModelName());
+		prostrb.append(prif.getFieldName());
 		prostrb.append(");\r\n	}\r\n\r\n	/**\r\n	 * 基础模板 添加一条完整的 ");
 		prostrb.append(zt.getTableName());
 		prostrb.append(" 记录\r\n	 */\r\n	@Override\r\n	public int baseinsert(");

@@ -11,12 +11,12 @@ public class myfield
 	/**
 	 * 字段名在Model中的全小写名称
 	 */
-	private String FieldModelName;
+	//private String FieldModelName;
 
 	/**
 	 * 字段名在Model中Get\Set时的首字母大写名称
 	 */
-	private String FieldGetSetName;
+	//private String FieldGetSetName;
 
 	/**
 	 * 字段注释
@@ -56,23 +56,23 @@ public class myfield
 	public void setFieldName(String fieldName)
 	{
 		FieldName = fieldName;
-		SetFieldName();
+//		SetFieldName();
 	}
 
-	public String getFieldModelName()
-	{
-		return FieldModelName;
-	}
+//	public String getFieldModelName()
+//	{
+//		return FieldModelName;
+//	}
 
 //	public void setFieldModelName(String fieldModelName)
 //	{
 //		FieldModelName = fieldModelName;
 //	}
 
-	public String getFieldGetSetName()
-	{
-		return FieldGetSetName;
-	}
+//	public String getFieldGetSetName()
+//	{
+//		return FieldGetSetName;
+//	}
 
 //	public void setFieldGetSetName(String fieldGetSetName)
 //	{
@@ -143,13 +143,13 @@ public class myfield
 	/**
 	 * 设置字段名
 	 */
-	private void SetFieldName()
-	{
-		this.FieldModelName = this.FieldName.toLowerCase();
-		String zstr0 = this.FieldModelName.substring(0, 1).toUpperCase();
-		String zstr = this.FieldModelName.substring(1);
-		this.FieldGetSetName = zstr0 + zstr;
-	}
+//	private void SetFieldName()
+//	{
+//		this.FieldModelName = this.FieldName.toLowerCase();
+//		String zstr0 = this.FieldModelName.substring(0, 1).toUpperCase();
+//		String zstr = this.FieldModelName.substring(1);
+//		this.FieldGetSetName = zstr0 + zstr;
+//	}
 
 	/**
 	 * 通过数据库类型名，设置其他类型名

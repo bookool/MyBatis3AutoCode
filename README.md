@@ -230,3 +230,6 @@ java -jar MyBatis3AutoCode.jar config.xml TableName
 
 ### 17-5-5
 1、修改了检测空的Bug。
+
+### 17-6-10
+1、所有字段统一了大小写。
