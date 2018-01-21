@@ -26,7 +26,7 @@ public class BuildCode
 		prostrb.append(zt.getPackageName());
 		prostrb.append(".model;\r\n\r\nimport java.util.Date;\r\nimport java.math.BigDecimal;\r\n\r\n/**\r\n * ");
 		prostrb.append(zt.getTableComment());
-		prostrb.append("\r\n * @自动生成 ");
+		prostrb.append("\r\n * @自动生成 https://github.com/bookool/MyBatis3AutoCode \r\n * @自动生成 ");
 		prostrb.append(df.format(new Date()));
 		prostrb.append("\r\n */\r\npublic class ");
 		prostrb.append(zt.getTableName());
@@ -116,7 +116,7 @@ public class BuildCode
 		prostrb.append(zt.getTableName());
 		prostrb.append(";\r\n\r\n/**\r\n * ");
 		prostrb.append(zt.getTableComment());
-		prostrb.append("\r\n * @自动生成 ");
+		prostrb.append("\r\n * @自动生成 https://github.com/bookool/MyBatis3AutoCode \r\n * @自动生成 ");
 		prostrb.append(df.format(new Date()));
 		prostrb.append("\r\n */\r\npublic interface ");
 		prostrb.append(zt.getTableName());
@@ -552,7 +552,7 @@ public class BuildCode
 		prostrb.append(zt.getTableName());
 		prostrb.append(";\r\n\r\n/**\r\n * ");
 		prostrb.append(zt.getTableComment());
-		prostrb.append("\r\n * @自动生成 ");
+		prostrb.append("\r\n * @自动生成 https://github.com/bookool/MyBatis3AutoCode \r\n * @自动生成 ");
 		prostrb.append(df.format(new Date()));
 		prostrb.append("\r\n */\r\npublic interface ");
 		prostrb.append(zt.getTableName());
@@ -651,7 +651,7 @@ public class BuildCode
 		prostrb.append(zt.getTableName());
 		prostrb.append("Service;\r\n\r\n/**\r\n * ");
 		prostrb.append(zt.getTableComment());
-		prostrb.append("\r\n * @自动生成 ");
+		prostrb.append("\r\n * @自动生成 https://github.com/bookool/MyBatis3AutoCode \r\n * @自动生成 ");
 		prostrb.append(df.format(new Date()));
 		prostrb.append("\r\n */\r\n@Service(\"");
 		prostrb.append(zt.getTableName());
