@@ -1,15 +1,17 @@
 # MyBatis3AutoCode (For MySQL)
-MyBatis3的代码自动生成工具，简单实用，java，for MySQL。
-官方的代码生成工具 MyBatis Generator 非常强大，但是配置起来有点啰嗦，而且生成注释也很麻烦。
-对于绝大多数项目来说，代码生成器就是为了简单而生的，所以我不自量力，自己写了一个。
-优点：配置使用简单，根据数据库脚本批量生成代码和完整的注释。
+MyBatis3的代码自动生成工具，简单实用，java，for MySQL。优点：
+* 配置使用简单
+* 根据数据库脚本批量生成model、dao、dao.xml、service、service.impl以及基础的增删改查分页的业务代码模板
+* 将数据脚本中的注释完美地嵌入代码中。
+* 本项目还有 For PostgreSQL 的版本，详见：[PgBatis3AutoCode](https://github.com/bookool/PgBatis3AutoCode)
 
 ## 使用方法
 ### 1、生成数据库脚本
 * 数据库脚本文件以 .sql 结尾；
 * 所有数据库脚本文件请放在同一个文件夹下，不要放在子目录中；
 * 程序自动遍历所有脚本文件，根据建表脚本生成代码，建表脚本格式：
-```SQL
+
+```
 CREATE TABLE `TB_Users` (
   `ID` int(11) NOT NULL COMMENT '用户ID',
   `UserName` varchar(50) NOT NULL COMMENT '用户姓名',
@@ -18,16 +20,18 @@ CREATE TABLE `TB_Users` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 ```
+
 注意：必须有字段注释和表注释！
 
 ### 2、生成配置文件
 配置文件格式如下：
-```XML
+
+```
 <?xml version="1.0" encoding="UTF-8" ?>
 <Config>
 	<!-- 包名 -->
-	<PackageName>cn.run2.TG.HelloWorld</PackageName>
-	<!-- 数据表前缀 -->
+	<PackageName>com.bookool.demo</PackageName>
+	<!-- 数据表前缀（可以为空） -->
 	<TableNamePrefixion>TB_</TableNamePrefixion>
 	<!-- 数据表脚本文件所在目录 -->
 	<TableScriptDir ConType="dir">/root/demo/table</TableScriptDir>
@@ -38,18 +42,30 @@ CREATE TABLE `TB_Users` (
 	<!-- service目录 -->
 	<ServiceDir ConType="dir">/root/demo/demo/src/main/java/com/bookool/demo/service</ServiceDir>
 	<!-- service.impl目录 -->
-	<ServiceImplDir ConType="dir">/root/demo/demo/src/main/java/com/bookool/demo/service\impl</ServiceImplDir>
+	<ServiceImplDir ConType="dir">/root/demo/demo/src/main/java/com/bookool/demo/service/impl</ServiceImplDir>
 </Config>
 ```
+
 注意：目录必须存在！
 
-### 2、执行
+### 3、执行
 1.生成jar包；
-2.使用命令行执行下列命令：
+
+2.使用方法1：行执行下列命令，生成所有代码：
+
 ```
 java -jar MyBatis3AutoCode.jar config.xml
 ```
+
 其中：MyBatis3AutoCode.jar 为生成的 jar 包， config.xml 为配置文件路径。
+
+3.使用方法2：行执行下列命令，生成某一张表的代码：
+
+```
+java -jar MyBatis3AutoCode.jar config.xml TableName
+```
+
+其中：TableName为表名（不加前缀）。
 
 ## 注意
 * 表脚本必须要有字段注释和表注释。
@@ -57,15 +73,15 @@ java -jar MyBatis3AutoCode.jar config.xml
 * 仅支持 UTF-8 。
 
 
-### 生成的dao下的xml文件示例：
+## 生成的dao下的xml文件示例：
 
-```XML
+```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <!-- 用户表 -->
 <mapper namespace="cn.run2.TG.HelloWorld.dao.UsersMapper" >
-	<resultMap id="BaseResultMap" type="cn.run2.TG.HelloWorld.model.Users" >
+	<resultMap id="BaseResultMap" type="com.bookool.demo.model.Users" >
 		<!-- 用户ID -->
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<!-- 用户姓名 -->
@@ -134,7 +150,7 @@ java -jar MyBatis3AutoCode.jar config.xml
 	</insert>
 
 	<!-- 基础模板 添加一条 Users 记录 -->
-	<insert id="baseinsertSelective" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+	<insert id="baseinsertSelective" parameterType="com.bookool.demo.model.Users" >
 		INSERT INTO TB_Users
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id!=null" >
@@ -167,7 +183,7 @@ java -jar MyBatis3AutoCode.jar config.xml
 	</insert>
 
 	<!-- 基础模板 更新完整的 Users 记录 -->
-	<update id="baseupdate" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+	<update id="baseupdate" parameterType="com.bookool.demo.model.Users" >
 		UPDATE TB_Users
 		<set>
 			UserName = #{username,jdbcType=VARCHAR},
@@ -179,7 +195,7 @@ java -jar MyBatis3AutoCode.jar config.xml
 	</update>
 
 	<!-- 基础模板 更新 Users 记录 -->
-	<update id="baseupdateSelective" parameterType="cn.run2.TG.HelloWorld.model.Users" >
+	<update id="baseupdateSelective" parameterType="com.bookool.demo.model.Users" >
 		UPDATE TB_Users
 		<set>
 			<if test="username!=null" >
@@ -199,7 +215,7 @@ java -jar MyBatis3AutoCode.jar config.xml
 </mapper>
 ```
 
-### 更新：
+## 更新：
 
 ### 17-2-2
 1、表前缀现在可以为空了；
@@ -233,3 +249,7 @@ java -jar MyBatis3AutoCode.jar config.xml TableName
 
 ### 17-6-10
 1、所有字段统一了大小写。
+
+### 18-1-21
+1、修改了小Bug。
+2、增加了 For PostgreSQL 的版本，详见：[PgBatis3AutoCode](https://github.com/bookool/PgBatis3AutoCode)
